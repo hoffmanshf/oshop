@@ -16,7 +16,12 @@ export class CategoryService {
   }
 
   getCategories() {
-    // return this.db.list('/categories', {query: {orderByChild: 'name'}});
+    // // you can do manual unsubscribe with this approach
+    // return this.observableCategories$.pipe(map(actions =>
+    //   actions.map(a => ({ key: a.key, ...a.payload.val() }))
+    // )).subscribe(items => {
+    //   return items.map(item => item.key);
+    // });
     return this.observableCategories$.pipe(map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
     }));
