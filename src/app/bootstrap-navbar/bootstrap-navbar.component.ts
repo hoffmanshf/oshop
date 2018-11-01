@@ -22,7 +22,6 @@ export class BootstrapNavbarComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log('bs componnet is unsubscribe')
     this.subscription.unsubscribe();
   }
 
