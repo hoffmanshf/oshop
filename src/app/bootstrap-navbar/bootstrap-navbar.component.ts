@@ -1,15 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { AuthService } from '../auth.service';
+import { AppUser } from '../models/app-user';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'bootstrap-navbar',
   templateUrl: './bootstrap-navbar.component.html',
   styleUrls: ['./bootstrap-navbar.component.css']
 })
-export class BootstrapNavbarComponent implements OnInit {
+export class BootstrapNavbarComponent implements OnDestroy {
 
-  constructor() { }
+  appUser: AppUser;
+  subscription: Subscription;
 
-  ngOnInit() {
+  constructor(private authService: AuthService) {
+    this.subscription = authService.appUser$.subscribe(appUser => this.appUser = appUser);
+   }
+
+  logout() {
+    this.authService.logout();
+  }
+
+  ngOnDestroy() {
+    console.log('bs componnet is unsubscribe')
+    this.subscription.unsubscribe();
   }
 
 }
